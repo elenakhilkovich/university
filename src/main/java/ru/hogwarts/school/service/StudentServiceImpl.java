@@ -23,9 +23,10 @@ public class StudentServiceImpl implements StudentService {
         students.put(lastId, student);
         return student;
     }
+
     @Override
     public Student findStudent(long id) {
-        Student student =  students.get(id);
+        Student student = students.get(id);
         if (student == null) {
             throw new NotFoundStudentException();
         }
