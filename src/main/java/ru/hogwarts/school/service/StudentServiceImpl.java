@@ -1,7 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exceptions.NotFoundStudentException;
+import ru.hogwarts.school.exceptions.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
@@ -14,13 +14,13 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
     private final Map<Long, Student> students = new HashMap<>();
 
-    private long lastId = 0;
+    private long currentId = 0;
 
 
     @Override
     public Student addStudent(Student student) {
-        student.setId(++lastId);
-        students.put(lastId, student);
+        student.setId(++currentId);
+        students.put(currentId, student);
         return student;
     }
 
@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService {
     public Student findStudent(long id) {
         Student student = students.get(id);
         if (student == null) {
-            throw new NotFoundStudentException();
+            throw new StudentNotFoundException();
         }
         return student;
     }
@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
             students.put(student.getId(), student);
             return student;
         }
-        throw new NotFoundStudentException();     //("такого студента нет")
+        throw new StudentNotFoundException();     //("такого студента нет")
     }
 
     @Override
@@ -47,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
         if (students.containsKey(id)) {
             return students.remove(id);
         }
-        throw new NotFoundStudentException();           //("такого студента нет")
+        throw new StudentNotFoundException();           //("такого студента нет")
     }
 
     @Override

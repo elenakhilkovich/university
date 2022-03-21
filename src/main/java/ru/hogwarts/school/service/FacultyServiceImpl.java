@@ -1,7 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.exceptions.NotFoundFacultyException;
+import ru.hogwarts.school.exceptions.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 
 import java.util.*;
@@ -23,7 +23,7 @@ public class FacultyServiceImpl implements FacultyService {
     public Faculty findFaculty(long id) {
         Faculty faculty = faculties.get(id);
         if (faculty == null) {
-            throw new NotFoundFacultyException();
+            throw new FacultyNotFoundException();
         }
         return faculty;
     }
@@ -34,7 +34,7 @@ public class FacultyServiceImpl implements FacultyService {
             faculties.put(faculty.getId(), faculty);
             return faculty;
         }
-        throw new NotFoundFacultyException();
+        throw new FacultyNotFoundException();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class FacultyServiceImpl implements FacultyService {
         if (faculties.containsKey(id)) {
             return faculties.remove(id);
         }
-        throw new NotFoundFacultyException();
+        throw new FacultyNotFoundException();
     }
 
     @Override
